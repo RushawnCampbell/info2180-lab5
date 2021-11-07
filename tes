@@ -1,0 +1,94 @@
+     <table>
+            <thead> 
+                <td>Name</td>
+                <td>Continent</td>
+                <td>Independence</td>
+                <td>Head of State</td>
+            </thead>
+            <tbody> 
+                <?php foreach ($results as $row): ?>
+                  <tr> 
+                      <td><?= $row['name']?></td>
+                      <td><?= $row['continent']?></td>
+                      <td><?= $row['independence_year']?></td>
+                      <td><?= $row['head_of_state']?></td>
+                  </tr>
+                <?php endforeach; ?>
+            </tbody>
+    </table>
+
+    <table>
+            <thead> 
+                <td>Name</td>
+                <td>Continent</td>
+                <td>Independence</td>
+                <td>Head of State</td>
+            </thead>
+            <tbody> 
+                <?php foreach ($results as $row): ?>
+                  <tr> 
+                      <td><?= $row['name']?></td>
+                      <td><?= $row['continent']?></td>
+                      <td><?= $row['independence_year']?></td>
+                      <td><?= $row['head_of_state']?></td>
+                  </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+
+
+        else if (!empty($_GET['country'])  && $_GET['context'] == "cities"){
+        $countryCleaned = ucwords(trim(filter_var($_GET['country'], FILTER_SANITIZE_STRING)));
+        $contextCleaned = ucwords(trim(filter_var($_GET['country'], FILTER_SANITIZE_STRING)));
+        $stmt = $conn->query("SELECT cities.name, cities.district, cities.population FROM cities  JOIN 
+        countries ON cities.country_code = countries.code  WHERE countries.name = '$countryCleaned' ");
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);?>
+
+        <table>
+            <thead> 
+                <td>Name</td>
+                <td>District</td>
+                <td>Population</td>
+            </thead>
+            <tbody> 
+                <?php foreach ($results as $row): ?>
+                  <tr> 
+                      <td><?= $row['name']?></td>
+                      <td><?= $row['district']?></td>
+                      <td><?= $row['population']?></td>
+                  </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    <?php }
+
+
+
+
+
+<?php }
+else {
+    $stmt = $conn->query("SELECT * FROM countries ");
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  ?>
+<table>
+        <thead> 
+            <td>Name</td>
+            <td>Continent</td>
+            <td>Independence</td>
+            <td>Head of State</td>
+        </thead>
+        <tbody> 
+            <?php foreach ($results as $row): ?>
+              <tr> 
+                  <td><?= "Last else"?></td>
+                  <td><?= $row['continent']?></td>
+                  <td><?= $row['independence_year']?></td>
+                  <td><?= $row['head_of_state']?></td>
+              </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php } ?>
