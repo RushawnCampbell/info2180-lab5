@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
    else if ( isset($_GET['country']) && !empty($_GET['country']) && isset($_GET['context']) && $_GET['context'] == "cities" ){
         $cleanedCountry = ucwords(trim(filter_var($_GET['country'], FILTER_SANITIZE_STRING)));
         $stmt = $conn->query("SELECT cities.name, cities.district, cities.population FROM cities  JOIN 
-        countries ON cities.country_code = countries.code  WHERE countries.name = '$cleanedCountry' ");
+        countries ON cities.country_code = countries.code  WHERE countries.name LIKE '%$cleanedCountry%' ");
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);?>
 
         <table>
