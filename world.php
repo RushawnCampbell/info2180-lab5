@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
               </tbody>
           </table>
   <?php }
-    else{
+    else if ( (!isset($_GET['country'])|| empty($_GET['country'])) && !isset($_GET['context'])  ){
       $stmt = $conn->query("SELECT * FROM countries ");
       $results = $stmt->fetchAll(PDO::FETCH_ASSOC); ?>
             <table>
@@ -75,5 +75,27 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         <?php endforeach; ?>
                     </tbody>
             </table>
-   <?php }  
+   <?php } 
+   else if ((!isset($_GET['country'])|| empty($_GET['country'])) && isset($_GET['context']) ){
+        $stmt = $conn->query("SELECT * FROM cities ");
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);?>
+
+        <table>
+              <tr> 
+                  <th>Name</th>
+                  <th>District</th>
+                  <th>Population</th>
+              </tr>
+              <tbody> 
+                  <?php foreach ($results as $row): ?>
+                    <tr> 
+                        <td><?= $row['name']?></td>
+                        <td><?= $row['district']?></td>
+                        <td><?= $row['population']?></td>
+                    </tr>
+                  <?php endforeach; ?>
+              </tbody>
+          </table>
+
+   <?php } 
  } ?>
